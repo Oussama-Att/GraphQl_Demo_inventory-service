@@ -9,17 +9,14 @@ import oss.att.inventoryservice.entities.Video;
 import oss.att.inventoryservice.repositories.CreatorRepository;
 import oss.att.inventoryservice.repositories.VideoRepository;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @SpringBootApplication
 public class InventoryServiceApplication {
 
-	private CreatorRepository creatorRepository;
-	private VideoRepository videoRepository;
+	private final CreatorRepository creatorRepository;
+	private final VideoRepository videoRepository;
 
 	public InventoryServiceApplication(CreatorRepository creatorRepository, VideoRepository videoRepository) {
 		this.creatorRepository = creatorRepository;
@@ -29,7 +26,6 @@ public class InventoryServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(InventoryServiceApplication.class, args);
 	}
-
 
 	@Bean
 	CommandLineRunner start(CreatorRepository creatorRepository, VideoRepository videoRepository) {
@@ -41,8 +37,21 @@ public class InventoryServiceApplication {
 			creatorRepository.saveAll(creators);
 
 			List<Video> videos = List.of(
-					Video.builder().name("Video 1").url("http://video1.com").description("Learn Spring").datePublication(new Date()).creator(creators.get(0)).build(),
-					Video.builder().name("Video 2").url("http://video2.com").description("Learn GraphQL").datePublication(new Date()).creator(creators.get(1)).build()
+					Video.builder()
+							.name("Video 1")
+							.url("http://video1.com")
+							.description("Learn Spring")
+							.datePublication(LocalDate.now()) // Utilisation de LocalDate.now()
+							.creator(creators.get(0))
+							.build(),
+
+					Video.builder()
+							.name("Video 2")
+							.url("http://video2.com")
+							.description("Learn GraphQL")
+							.datePublication(LocalDate.now()) // Utilisation de LocalDate.now()
+							.creator(creators.get(1))
+							.build()
 			);
 			videoRepository.saveAll(videos);
 		};

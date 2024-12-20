@@ -20,4 +20,7 @@ public class Creator {
     private String email;
     @OneToMany(mappedBy = "creator")
     private List<Video> videos;
+
+    public Creator(Object o, String name, String email) {
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,8 +20,9 @@ public class Video {
     private String name;
     private String description;
     private String url;
-    private Date datePublication;
+    private LocalDate datePublication;
     @ManyToOne
     private Creator creator;
+
 
 }
