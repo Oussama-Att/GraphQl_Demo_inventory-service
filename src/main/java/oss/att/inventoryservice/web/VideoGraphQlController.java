@@ -14,6 +14,9 @@ public class VideoGraphQlController {
     CreatorRepository creatorRepository;
     VideoRepository videoRepository;
     public VideoGraphQlController(CreatorRepository creatorRepository, VideoRepository videoRepository) {
+        if (creatorRepository == null || videoRepository == null) {
+            throw new IllegalArgumentException("Repositories must not be null");
+        }
         this.creatorRepository = creatorRepository;
         this.videoRepository = videoRepository;
     }
@@ -24,7 +27,11 @@ public class VideoGraphQlController {
     }
     @QueryMapping
     public Creator creatorById(@Argument String id) {
-        return creatorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Creator %s not found", id)));
+        return creatorRepository.findById(String.valueOf(Long.parseLong(id)))
+                .orElseThrow(() -> new RuntimeException(String.format("Creator with ID %s not found", id)));
     }
+
+
+
+
 }
